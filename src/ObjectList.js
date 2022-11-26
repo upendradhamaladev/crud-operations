@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
+import { exportPDF } from "./helpers/Extract";
+import { CSVLink, CSVDownload } from "react-csv";
 
 const ObjectList = ({
   taskslists,
@@ -34,6 +36,15 @@ const ObjectList = ({
     setTasksList([...taskslists]);
     console.log("it is this", taskslists);
   };
+  const data = taskslists.map((elt) => [
+    elt.title,
+    elt.description,
+    new Date(elt.startDate).toLocaleString(),
+
+    elt.completed,
+  ]);
+  const columns = [["Title", "Description", "Start Date", "Completed"]];
+
   return (
     <>
       {taskslists.length ? (
@@ -81,6 +92,18 @@ const ObjectList = ({
                 );
               })}
           </table>
+        </div>
+      ) : (
+        ""
+      )}
+      {taskslists.length ? (
+        <div className="download-report">
+          <CSVLink data={taskslists}>
+            <button className="extract-btn">DownLoad As CSV</button>
+          </CSVLink>
+          <a onClick={() => exportPDF(columns, data)}>
+            <button className="extract-btn">Download As PDF</button>
+          </a>
         </div>
       ) : (
         ""

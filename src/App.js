@@ -152,6 +152,8 @@ const App = () => {
         setEditMode={setEditMode}
         setActiveTask={setActiveTask}
       />
+
+      
     </div>
   );
 };
