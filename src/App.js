@@ -32,12 +32,10 @@ const App = () => {
     if (new Date(Date.now()) > new Date(startdate)) {
       errors.startdate = "Start Date cannot be less than current Date";
     }
-    // console.log("errors", errors);
     return errors;
   };
   useEffect(() => {
     if (taskslists.length) {
-      console.log("this ran");
       localStorage.setItem("tasksLists", JSON.stringify(taskslists));
     } else {
       localStorage.removeItem("tasksLists");
@@ -84,14 +82,11 @@ const App = () => {
     transformHeader: (header) => header.toLowerCase().replace(/\W/g, "_"),
   };
   const handleForce = (data, fileInfo) => {
-    data.map((data, index) => {
-      console.log("apun", data.startdate);
-    });
+    data.map((data, index) => {});
     setTasksList((prevTask) => [...prevTask, ...data]);
   };
   return (
     <div className="container">
-      {console.log("Task", taskslists)}
       <h1 className="top-title">Crud Apk</h1>
       <CSVReader
         cssClass="react-csv-input"

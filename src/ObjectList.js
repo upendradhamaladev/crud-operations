@@ -13,7 +13,6 @@ const ObjectList = ({
   setEditMode,
   setActiveTask,
 }) => {
-  console.log("Tasks", taskslists);
   const checkboxHandler = (id) => {
     let found = taskslists.find((item, index) => index === id);
     found.completed = !found.completed;
@@ -34,7 +33,6 @@ const ObjectList = ({
     taskslists.splice(id, 1);
 
     setTasksList([...taskslists]);
-    console.log("it is this", taskslists);
   };
   const data = taskslists.map((elt) => [
     elt.title,
