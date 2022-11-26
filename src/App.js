@@ -4,8 +4,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import ObjectList from "./ObjectList";
+import CSVReader from "react-csv-reader";
+
 const App = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startdate, setStartDate] = useState(new Date());
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [taskslists, setTasksList] = useState([]);
@@ -27,8 +29,8 @@ const App = () => {
     if (!props.description) {
       errors.description = "Description is Required";
     }
-    if (new Date(Date.now()) > new Date(startDate)) {
-      errors.startDate = "Start Date cannot be less than current Date";
+    if (new Date(Date.now()) > new Date(startdate)) {
+      errors.startdate = "Start Date cannot be less than current Date";
     }
     // console.log("errors", errors);
     return errors;
@@ -47,7 +49,7 @@ const App = () => {
     let task = {
       title,
       description,
-      startDate,
+      startdate,
       completed: false,
     };
     if (Object.keys(validate(task)).length) {
@@ -57,7 +59,7 @@ const App = () => {
     if (editMode) {
       const updatedTodos = taskslists.map((todo, id) => {
         if (id === activeTask) {
-          return { ...todo, title, description, startDate };
+          return { ...todo, title, description, startdate };
         }
         return todo;
       });
@@ -75,12 +77,28 @@ const App = () => {
     setDescription("");
     setStartDate(new Date());
   };
+  const papaparseOptions = {
+    header: true,
+    dynamicTyping: true,
+    skipEmptyLines: true,
+    transformHeader: (header) => header.toLowerCase().replace(/\W/g, "_"),
+  };
+  const handleForce = (data, fileInfo) => {
+    data.map((data, index) => {
+      console.log("apun", data.startdate);
+    });
+    setTasksList((prevTask) => [...prevTask, ...data]);
+  };
   return (
     <div className="container">
       {console.log("Task", taskslists)}
       <h1 className="top-title">Crud Apk</h1>
-      {console.log("final", taskslists)}
-
+      <CSVReader
+        cssClass="react-csv-input"
+        label="Import Csv"
+        onFileLoaded={handleForce}
+        parserOptions={papaparseOptions}
+      />
       <form onSubmit={formHandler}>
         <div className="task-container">
           <div className="form-control">
@@ -131,11 +149,11 @@ const App = () => {
               timeCaption="time"
               dateFormat="MMMM d, yyyy h:mm aa"
               showTimeSelect
-              selected={startDate}
+              selected={startdate}
               onChange={(date) => setStartDate(date)}
             />
-            {errors.startDate ? (
-              <div className="error-msg">{errors.startDate}</div>
+            {errors.startdate ? (
+              <div className="error-msg">{errors.startdate}</div>
             ) : (
               ""
             )}
@@ -143,6 +161,7 @@ const App = () => {
           <button type="submit"> {!editMode ? "Add" : "Update"} </button>
         </div>
       </form>
+
       <ObjectList
         taskslists={taskslists}
         setTasksList={setTasksList}
@@ -152,8 +171,6 @@ const App = () => {
         setEditMode={setEditMode}
         setActiveTask={setActiveTask}
       />
-
-      
     </div>
   );
 };

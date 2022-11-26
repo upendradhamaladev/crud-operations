@@ -28,7 +28,7 @@ const ObjectList = ({
     setEditMode(true);
     setTitle(task.title);
     setDescription(task.description);
-    setStartDate(new Date(task.startDate));
+    setStartDate(new Date(task.startdate));
   };
   const deleteHandler = (id) => {
     taskslists.splice(id, 1);
@@ -39,7 +39,7 @@ const ObjectList = ({
   const data = taskslists.map((elt) => [
     elt.title,
     elt.description,
-    new Date(elt.startDate).toLocaleString(),
+    new Date(elt.startdate).toLocaleString(),
 
     elt.completed,
   ]);
@@ -78,7 +78,7 @@ const ObjectList = ({
                     <td className="title">{task?.title}</td>
                     <td className="title">{task?.description}</td>
                     <td className="title">
-                      {new Date(task?.startDate).toLocaleString()}
+                      {new Date(task?.startdate).toLocaleString()}
                     </td>
                     <td className="action-icons">
                       <span className="edit">
