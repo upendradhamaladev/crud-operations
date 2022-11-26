@@ -7,14 +7,6 @@ form {
   background: #f5f6fa;
   border-radius: 20px;
 
-  .task-container {
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    // flex-direction: column;
-    // border: 1px solid black;
-  }
-
   .form-control {
     margin-bottom: 25px;
     width: 100%;
@@ -49,6 +41,7 @@ form {
       height: 100px;
       //   outline: none;
       border: none;
+      resize: none;
       &:focus {
         outline: none;
       }
